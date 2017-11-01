@@ -59,17 +59,18 @@ title('power all')
 meme = fft(y(:,25));
 
 
+
 %========
-% sze = 320;
-% abs_area = abs(meme);
-% y_fft = abs_area(1:160);
-% FF = fs*(0:160-1)/320;
-% figure
-% plot(FF, y_fft, '-x')
-% title('fft 1')
-% xlabel('freq and hz');
-% ylabel('Amplitude');
-% figure
+sze = 320;
+abs_area = abs(meme);
+y_fft = abs_area(1:160);
+FF = fs*(0:160-1)/320;
+figure
+plot(FF, y_fft, '-x')
+title('fft 1')
+xlabel('freq and hz');
+ylabel('Amplitude');
+figure
 %=====
 
 Thresh = zeros(147:1)
@@ -98,19 +99,20 @@ for i = 1:147
     FF = fs*(0:160-1)/320;
     
     [val, index] = max(y_fft);
-    idx_max = FF(1:index);
-    
+    index;
+    idx_max = FF(index);
+    fwefbeg = FF(33);
     for j = 1:160
-        if idx_max > 840
-            voice1(j:i) = 1
-        elseif idx_max >= 840 & idx_max <1380
-            voice (j:i) = 2
-        elseif idx_max >= 1380 & idx_max <1920
-            voice (j:i) = 3
+        if idx_max >= 2460
+            voice1(j:i) = 5
         elseif idx_max >= 1920 & idx_max <2460
-            voice (j:i) = 4
-        elseif idx_max >= 2460
-            voice (j:i) = 5
+            voice1(j:i) = 4
+        elseif idx_max >= 1380 & idx_max <1920
+            voice1(j:i) = 3
+        elseif idx_max >= 840 & idx_max <1380
+            voice1(j:i) = 2
+        elseif idx_max > 840
+            voice1(j:i) = 1
         end
     end
 end
